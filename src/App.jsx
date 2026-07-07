@@ -249,25 +249,6 @@ function App() {
           </div>
         </div>
       </footer>
-
-      <nav className="mobile-tabbar" aria-label="Быстрая навигация">
-        <a href="#top">
-          <span className="tab-icon" aria-hidden="true">◉</span>
-          <span>Главная</span>
-        </a>
-        <a href="#services">
-          <span className="tab-icon" aria-hidden="true">◈</span>
-          <span>Услуги</span>
-        </a>
-        <a href="#how">
-          <span className="tab-icon" aria-hidden="true">◇</span>
-          <span>Как работаем</span>
-        </a>
-        <a href="#contacts">
-          <span className="tab-icon" aria-hidden="true">✉</span>
-          <span>Контакты</span>
-        </a>
-      </nav>
     </>
   )
 }
