@@ -1,10 +1,7 @@
-import { useRef, useState } from 'react'
 import { motion } from 'motion/react'
 import portrait from './assets/portrait.jpg'
-import StaggeredMenu from './components/StaggeredMenu'
 
 const services = [
-  { title: 'Коммерческая недвижимость', desc: 'Аренда, купля-продажа, разрешительная документация.' },
   { title: 'Арбитражные споры', desc: 'Ведение дел во всех инстанциях.' },
   { title: 'Сопровождение сделок', desc: 'Проверка контрагента, структура, закрытие.' },
   { title: 'Договорное право', desc: 'Разработка и экспертиза договоров.' },
@@ -18,13 +15,6 @@ const services = [
   { title: 'Юридический аудит', desc: 'Диагностика рисков перед сделкой.' },
 ]
 
-const metrics = [
-  { num: '[ЗАПОЛНИТЬ]', label: 'лет практики' },
-  { num: '[ЗАПОЛНИТЬ]', label: 'завершённых дел' },
-  { num: '[ЗАПОЛНИТЬ]', label: 'постоянных клиентов' },
-  { num: '[ЗАПОЛНИТЬ]', label: 'судов, где вели дела' },
-]
-
 const heroAdvantages = [
   'Первая консультация — бесплатно',
   'Оценка перспектив до начала работы',
@@ -33,40 +23,10 @@ const heroAdvantages = [
 ]
 
 const steps = [
-  { num: '01', title: 'Знакомство', desc: 'Обсудим ситуацию, ответим на вопросы, наметим следующий шаг.' },
-  { num: '02', title: 'Изучение документов', desc: 'Проанализируем материалы, объясним риски и варианты.' },
-  { num: '03', title: 'Предложим стратегию', desc: 'Дадим план с этапами и сроками, прозрачные условия.' },
-  { num: '04', title: 'Доведём дело до конца', desc: 'Сопровождаем до результата, держим в курсе.' },
-]
-
-const businessFormats = [
-  { title: 'Абонентское сопровождение', desc: 'Юрист на постоянной связи, фиксированный ежемесячный объём задач.' },
-  { title: 'Разовые проекты', desc: 'Отдельная сделка или спор — под фиксированный результат и бюджет.' },
-  { title: 'Проектная поддержка', desc: 'Усиление под крупный кейс: от аудита документов до суда.' },
-]
-
-const businessIncludes = [
-  'Первичная диагностика бесплатно',
-  'Отчёт по каждому этапу',
-  'Прозрачная тарификация',
-  'Документы и переписка от вашего имени',
-]
-
-const credentials = [
-  { title: 'Статус', value: '[ЗАПОЛНИТЬ: адвокат / юрист + номер удостоверения]' },
-  { title: 'Образование', value: '[ЗАПОЛНИТЬ: вуз, специальность, год выпуска]' },
-  { title: 'Квалификация', value: '[ЗАПОЛНИТЬ: сертификаты, курсы повышения]' },
-]
-
-const cases = [
-  { area: '[ЗАПОЛНИТЬ: тип спора]', court: '[ЗАПОЛНИТЬ: инстанция]', result: '[ЗАПОЛНИТЬ: результат / сумма]' },
-  { area: '[ЗАПОЛНИТЬ: тип спора]', court: '[ЗАПОЛНИТЬ: инстанция]', result: '[ЗАПОЛНИТЬ: результат / сумма]' },
-  { area: '[ЗАПОЛНИТЬ: тип спора]', court: '[ЗАПОЛНИТЬ: инстанция]', result: '[ЗАПОЛНИТЬ: результат / сумма]' },
-]
-
-const reviews = [
-  { text: '[ЗАПОЛНИТЬ: текст отзыва клиента]', name: '[ЗАПОЛНИТЬ: имя, роль / компания]' },
-  { text: '[ЗАПОЛНИТЬ: текст отзыва клиента]', name: '[ЗАПОЛНИТЬ: имя, роль / компания]' },
+  { title: 'Знакомство', desc: 'Обсудим ситуацию, ответим на вопросы, наметим следующий шаг.' },
+  { title: 'Изучение документов', desc: 'Проанализируем материалы, объясним риски и варианты.' },
+  { title: 'Предложим стратегию', desc: 'Дадим план с этапами и сроками, прозрачные условия.' },
+  { title: 'Доведём дело до конца', desc: 'Сопровождаем до результата, держим в курсе.' },
 ]
 
 const contactChannels = [
@@ -83,33 +43,7 @@ const fadeUp = {
   transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
 }
 
-const menuItems = [
-  { label: 'Главная', link: '#top', ariaLabel: 'Главная' },
-  { label: 'Услуги', link: '#services', ariaLabel: 'Услуги' },
-  { label: 'Как работаем', link: '#how', ariaLabel: 'Как работаем' },
-  { label: 'Для бизнеса', link: '#business', ariaLabel: 'Для бизнеса' },
-  { label: 'Экспертность', link: '#trust', ariaLabel: 'Экспертность' },
-  { label: 'Контакты', link: '#contacts', ariaLabel: 'Контакты' },
-]
-
-const menuSocials = [
-  { label: 'Позвонить · 8 925 791-04-01', link: 'tel:+79257910401' },
-  { label: 'WhatsApp', link: 'https://wa.me/79257910401' },
-  { label: 'Telegram', link: 'https://t.me/+79257910401' },
-  { label: 'gserezha@bk.ru', link: 'mailto:gserezha@bk.ru' },
-]
-
 function App() {
-  const menuRef = useRef(null)
-  const [showAllServices, setShowAllServices] = useState(false)
-
-  const openMenu = (e) => {
-    e?.preventDefault?.()
-    menuRef.current?.open()
-  }
-
-  const visibleServices = showAllServices ? services : services.slice(0, 6)
-
   return (
     <>
       <header className="header">
@@ -118,36 +52,14 @@ function App() {
           <nav className="nav-links">
             <a href="#top">Главная</a>
             <a href="#services">Услуги</a>
-            <a href="#business">О практике</a>
+            <a href="#how">Как работаем</a>
             <a href="#contacts">Контакты</a>
           </nav>
           <div className="nav-actions">
-            <button type="button" className="btn ghost menu-trigger" onClick={openMenu} aria-label="Открыть меню">
-              <span className="menu-trigger-icon" aria-hidden="true">
-                <span />
-                <span />
-                <span />
-              </span>
-              Меню
-            </button>
             <a href="#contacts" className="btn primary">Получить консультацию</a>
           </div>
         </div>
       </header>
-
-      <StaggeredMenu
-        ref={menuRef}
-        hideHeader
-        isFixed
-        position="right"
-        colors={['#141518', '#1f2126']}
-        accentColor="#c99b5e"
-        items={menuItems}
-        socialItems={menuSocials}
-        displaySocials
-        displayItemNumbering
-        logoText="Юрист Гусев С.А."
-      />
 
       <section className="hero" id="top">
         <div className="container">
@@ -181,15 +93,6 @@ function App() {
               <div className="hero-ctas">
                 <a href="#contacts" className="btn primary">Получить консультацию</a>
               </div>
-
-              <div className="hero-metrics">
-                {metrics.map((m) => (
-                  <div key={m.label} className="metric">
-                    <div className="metric-num">{m.num}</div>
-                    <div className="metric-label">{m.label}</div>
-                  </div>
-                ))}
-              </div>
             </motion.div>
 
             <motion.div
@@ -211,13 +114,12 @@ function App() {
       <section id="services">
         <div className="container">
           <motion.div className="section-head" {...fadeUp}>
-            <span className="chip light">Услуги</span>
             <h2>Поможем решить следующие проблемы</h2>
             <p>Формулировки от задач клиента — вы сразу видите, с чем можно прийти.</p>
           </motion.div>
 
           <div className="services-grid">
-            {visibleServices.map((s, i) => (
+            {services.map((s, i) => (
               <motion.div
                 key={s.title}
                 className="service-card"
@@ -231,135 +133,29 @@ function App() {
               </motion.div>
             ))}
           </div>
-
-          {services.length > 6 && (
-            <div className="services-more">
-              <button
-                type="button"
-                className="btn outline on-light"
-                onClick={() => setShowAllServices((v) => !v)}
-              >
-                {showAllServices ? 'Свернуть' : 'Показать ещё'}
-              </button>
-            </div>
-          )}
         </div>
       </section>
 
       <section id="how" className="muted">
         <div className="container">
           <motion.div className="section-head" {...fadeUp}>
-            <span className="chip light">Как работаем</span>
             <h2>От заявки до результата — четыре шага</h2>
-            <p>Прозрачный процесс: вы понимаете, что и когда происходит.</p>
           </motion.div>
 
           <div className="steps">
             {steps.map((s, i) => (
               <motion.div
-                key={s.num}
+                key={s.title}
                 className="step"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-60px' }}
                 transition={{ duration: 0.5, delay: i * 0.06 }}
               >
-                <div className="step-num">{s.num}</div>
                 <h3>{s.title}</h3>
                 <p>{s.desc}</p>
               </motion.div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="business">
-        <div className="container">
-          <motion.div className="section-head" {...fadeUp}>
-            <span className="chip light">Для бизнеса</span>
-            <h2>Юридическое сопровождение компаний</h2>
-            <p>Постоянное или проектное сопровождение — с отчётностью и фиксированной стоимостью.</p>
-          </motion.div>
-
-          <div className="business-grid">
-            {businessFormats.map((f, i) => (
-              <motion.div
-                key={f.title}
-                className="business-card"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.5, delay: i * 0.06 }}
-              >
-                <h3>{f.title}</h3>
-                <p>{f.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-
-          <motion.div className="business-includes" {...fadeUp}>
-            <h3 className="business-includes-title">Что входит в работу</h3>
-            <div className="tags">
-              {businessIncludes.map((b) => (
-                <span key={b} className="tag">{b}</span>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      <section id="trust" className="dark">
-        <div className="container">
-          <motion.div className="section-head" {...fadeUp}>
-            <span className="chip">Экспертность</span>
-            <h2 className="on-dark">Опыт, подтверждённый практикой</h2>
-            <p className="on-dark-muted">Разделы ниже заполняются реальными данными.</p>
-          </motion.div>
-
-          <div className="trust-block">
-            <h3 className="trust-heading">Удостоверения и квалификация</h3>
-            <div className="credentials">
-              {credentials.map((c) => (
-                <div key={c.title} className="credential">
-                  <strong>{c.title}</strong>
-                  <span>{c.value}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="trust-block">
-            <h3 className="trust-heading">Кейсы</h3>
-            <div className="cases-grid">
-              {cases.map((c, i) => (
-                <div key={i} className="case-card">
-                  <div className="case-row">
-                    <div className="case-label">Тип спора</div>
-                    <div className="case-value">{c.area}</div>
-                  </div>
-                  <div className="case-row">
-                    <div className="case-label">Инстанция</div>
-                    <div className="case-value">{c.court}</div>
-                  </div>
-                  <div className="case-row">
-                    <div className="case-label">Результат</div>
-                    <div className="case-value">{c.result}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="trust-block">
-            <h3 className="trust-heading">Отзывы</h3>
-            <div className="reviews-grid">
-              {reviews.map((r, i) => (
-                <div key={i} className="review-card">
-                  <p>«{r.text}»</p>
-                  <span>— {r.name}</span>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </section>
@@ -433,8 +229,6 @@ function App() {
               <ul>
                 <li><a href="#services">Услуги</a></li>
                 <li><a href="#how">Как работаем</a></li>
-                <li><a href="#business">Для бизнеса</a></li>
-                <li><a href="#trust">Экспертность</a></li>
                 <li><a href="#contacts">Контакты</a></li>
               </ul>
             </div>
@@ -464,9 +258,9 @@ function App() {
           <span className="tab-icon" aria-hidden="true">◈</span>
           <span>Услуги</span>
         </a>
-        <a href="#business">
+        <a href="#how">
           <span className="tab-icon" aria-hidden="true">◇</span>
-          <span>О практике</span>
+          <span>Как работаем</span>
         </a>
         <a href="#contacts">
           <span className="tab-icon" aria-hidden="true">✉</span>
