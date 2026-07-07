@@ -200,12 +200,17 @@ function App() {
                 <label htmlFor="c-msg">О задаче</label>
                 <textarea id="c-msg" placeholder="Коротко опишите ситуацию" />
               </div>
+              <label className="form-consent">
+                <input type="checkbox" defaultChecked required />
+                <span>
+                  Я даю{' '}
+                  <a href="/privacy.html" target="_blank" rel="noreferrer">согласие на обработку персональных данных</a>{' '}
+                  в соответствии с политикой конфиденциальности.
+                </span>
+              </label>
               <button type="submit" className="btn primary" style={{ width: '100%' }}>
                 Получить консультацию
               </button>
-              <p className="form-note">
-                Нажимая кнопку, вы соглашаетесь на обработку персональных данных.
-              </p>
             </motion.form>
           </div>
         </div>
