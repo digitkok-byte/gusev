@@ -1,41 +1,79 @@
+import { useRef, useState } from 'react'
 import { motion } from 'motion/react'
 import portrait from './assets/portrait.jpg'
+import StaggeredMenu from './components/StaggeredMenu'
 
 const services = [
   { title: 'Коммерческая недвижимость', desc: 'Аренда, купля-продажа, разрешительная документация.' },
-  { title: 'Арбитражные споры', desc: 'Ведение дел в арбитражных судах всех инстанций.' },
-  { title: 'Сопровождение сделок', desc: 'Проверка контрагента, структура, безопасное закрытие.' },
-  { title: 'Договорное право', desc: 'Разработка и экспертиза договоров под задачи бизнеса.' },
-  { title: 'Строительный подряд', desc: 'Сопровождение и защита в строительных спорах.' },
-  { title: 'Регистрация прав', desc: 'Регистрация недвижимости и прав собственности.' },
-  { title: 'Споры с госорганами', desc: 'Обжалование решений и защита в административных делах.' },
-  { title: 'Защита собственников', desc: 'Защита имущественных интересов и корпоративных прав.' },
-  { title: 'Корпоративные споры', desc: 'Разрешение конфликтов между участниками общества.' },
-  { title: 'Банкротство', desc: 'Сопровождение процедур для кредиторов и должников.' },
-  { title: 'Защита персональных данных', desc: 'Аудит, документация и работа с Роскомнадзором.' },
-  { title: 'Юридический аудит', desc: 'Диагностика правовых рисков перед сделкой или проектом.' },
+  { title: 'Арбитражные споры', desc: 'Ведение дел во всех инстанциях.' },
+  { title: 'Сопровождение сделок', desc: 'Проверка контрагента, структура, закрытие.' },
+  { title: 'Договорное право', desc: 'Разработка и экспертиза договоров.' },
+  { title: 'Строительный подряд', desc: 'Защита в спорах подрядчиков и заказчиков.' },
+  { title: 'Регистрация прав', desc: 'Оформление недвижимости и прав собственности.' },
+  { title: 'Споры с госорганами', desc: 'Обжалование решений и административная защита.' },
+  { title: 'Защита собственников', desc: 'Имущественные и корпоративные интересы.' },
+  { title: 'Корпоративные споры', desc: 'Конфликты между участниками общества.' },
+  { title: 'Банкротство', desc: 'Сопровождение кредиторов и должников.' },
+  { title: 'Защита персональных данных', desc: 'Аудит и работа с Роскомнадзором.' },
+  { title: 'Юридический аудит', desc: 'Диагностика рисков перед сделкой.' },
 ]
 
-const consultFeatures = [
-  { icon: '?', title: 'Ответим на вопросы', desc: 'Разберём ситуацию, объясним риски и следующие шаги.' },
-  { icon: '≡', title: 'Изучим документы', desc: 'Проведём анализ и предложим прозрачные варианты действий.' },
-  { icon: '→', title: 'Предложим стратегию', desc: 'Дадим план с фиксированными этапами и сроками.' },
+const metrics = [
+  { num: '[ЗАПОЛНИТЬ]', label: 'лет практики' },
+  { num: '[ЗАПОЛНИТЬ]', label: 'завершённых дел' },
+  { num: '[ЗАПОЛНИТЬ]', label: 'постоянных клиентов' },
+  { num: '[ЗАПОЛНИТЬ]', label: 'судов, где вели дела' },
 ]
 
-const aboutTags = [
-  'Регистрационные органы',
-  'Арбитражные суды',
-  'Судебный учёт',
-  'Досудебное урегулирование',
-  'Экспертные организации',
-  'Профессиональные объединения',
+const heroAdvantages = [
+  'Первая консультация — бесплатно',
+  'Оценка перспектив до начала работы',
+  'Фиксированные условия и сроки',
+  'Отчётность на каждом этапе',
 ]
 
-const heroFeatures = [
-  'Сопровождение сложных имущественных вопросов',
-  'Сопровождение и анализ до заключения сделки',
-  'Понятная стратегия и прозрачные условия',
-  'Судебная и досудебная защита',
+const steps = [
+  { num: '01', title: 'Знакомство', desc: 'Обсудим ситуацию, ответим на вопросы, наметим следующий шаг.' },
+  { num: '02', title: 'Изучение документов', desc: 'Проанализируем материалы, объясним риски и варианты.' },
+  { num: '03', title: 'Предложим стратегию', desc: 'Дадим план с этапами и сроками, прозрачные условия.' },
+  { num: '04', title: 'Доведём дело до конца', desc: 'Сопровождаем до результата, держим в курсе.' },
+]
+
+const businessFormats = [
+  { title: 'Абонентское сопровождение', desc: 'Юрист на постоянной связи, фиксированный ежемесячный объём задач.' },
+  { title: 'Разовые проекты', desc: 'Отдельная сделка или спор — под фиксированный результат и бюджет.' },
+  { title: 'Проектная поддержка', desc: 'Усиление под крупный кейс: от аудита документов до суда.' },
+]
+
+const businessIncludes = [
+  'Первичная диагностика бесплатно',
+  'Отчёт по каждому этапу',
+  'Прозрачная тарификация',
+  'Документы и переписка от вашего имени',
+]
+
+const credentials = [
+  { title: 'Статус', value: '[ЗАПОЛНИТЬ: адвокат / юрист + номер удостоверения]' },
+  { title: 'Образование', value: '[ЗАПОЛНИТЬ: вуз, специальность, год выпуска]' },
+  { title: 'Квалификация', value: '[ЗАПОЛНИТЬ: сертификаты, курсы повышения]' },
+]
+
+const cases = [
+  { area: '[ЗАПОЛНИТЬ: тип спора]', court: '[ЗАПОЛНИТЬ: инстанция]', result: '[ЗАПОЛНИТЬ: результат / сумма]' },
+  { area: '[ЗАПОЛНИТЬ: тип спора]', court: '[ЗАПОЛНИТЬ: инстанция]', result: '[ЗАПОЛНИТЬ: результат / сумма]' },
+  { area: '[ЗАПОЛНИТЬ: тип спора]', court: '[ЗАПОЛНИТЬ: инстанция]', result: '[ЗАПОЛНИТЬ: результат / сумма]' },
+]
+
+const reviews = [
+  { text: '[ЗАПОЛНИТЬ: текст отзыва клиента]', name: '[ЗАПОЛНИТЬ: имя, роль / компания]' },
+  { text: '[ЗАПОЛНИТЬ: текст отзыва клиента]', name: '[ЗАПОЛНИТЬ: имя, роль / компания]' },
+]
+
+const contactChannels = [
+  { label: '8 925 791-04-01', sub: 'Позвонить', href: 'tel:+79257910401' },
+  { label: 'WhatsApp', sub: 'Написать в мессенджер', href: 'https://wa.me/79257910401' },
+  { label: 'Telegram', sub: 'Быстрый чат', href: 'https://t.me/+79257910401' },
+  { label: 'gserezha@bk.ru', sub: 'Электронная почта', href: 'mailto:gserezha@bk.ru' },
 ]
 
 const fadeUp = {
@@ -45,31 +83,71 @@ const fadeUp = {
   transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
 }
 
+const menuItems = [
+  { label: 'Главная', link: '#top', ariaLabel: 'Главная' },
+  { label: 'Услуги', link: '#services', ariaLabel: 'Услуги' },
+  { label: 'Как работаем', link: '#how', ariaLabel: 'Как работаем' },
+  { label: 'Для бизнеса', link: '#business', ariaLabel: 'Для бизнеса' },
+  { label: 'Экспертность', link: '#trust', ariaLabel: 'Экспертность' },
+  { label: 'Контакты', link: '#contacts', ariaLabel: 'Контакты' },
+]
+
+const menuSocials = [
+  { label: 'Позвонить · 8 925 791-04-01', link: 'tel:+79257910401' },
+  { label: 'WhatsApp', link: 'https://wa.me/79257910401' },
+  { label: 'Telegram', link: 'https://t.me/+79257910401' },
+  { label: 'gserezha@bk.ru', link: 'mailto:gserezha@bk.ru' },
+]
+
 function App() {
+  const menuRef = useRef(null)
+  const [showAllServices, setShowAllServices] = useState(false)
+
+  const openMenu = (e) => {
+    e?.preventDefault?.()
+    menuRef.current?.open()
+  }
+
+  const visibleServices = showAllServices ? services : services.slice(0, 6)
+
   return (
     <>
       <header className="header">
-        <div className="top-bar">
-          <div className="container top-bar-inner">
-            <span>
-              Новый разбор: как арендатору защитить бизнес при досрочном расторжении договора{' '}
-              <a href="#blog">Читать материал →</a>
-            </span>
-            <button className="top-bar-close" aria-label="Закрыть">×</button>
-          </div>
-        </div>
         <div className="container nav">
-          <a href="#top" className="logo">Gusev</a>
+          <a href="#top" className="logo">Юрист Гусев С.А.</a>
           <nav className="nav-links">
             <a href="#top">Главная</a>
-            <a href="#about">О практике</a>
             <a href="#services">Услуги</a>
+            <a href="#business">О практике</a>
             <a href="#contacts">Контакты</a>
-            <a href="#blog">Блог</a>
           </nav>
-          <a href="#consult" className="btn primary">Получить консультацию</a>
+          <div className="nav-actions">
+            <button type="button" className="btn ghost menu-trigger" onClick={openMenu} aria-label="Открыть меню">
+              <span className="menu-trigger-icon" aria-hidden="true">
+                <span />
+                <span />
+                <span />
+              </span>
+              Меню
+            </button>
+            <a href="#contacts" className="btn primary">Получить консультацию</a>
+          </div>
         </div>
       </header>
+
+      <StaggeredMenu
+        ref={menuRef}
+        hideHeader
+        isFixed
+        position="right"
+        colors={['#141518', '#1f2126']}
+        accentColor="#c99b5e"
+        items={menuItems}
+        socialItems={menuSocials}
+        displaySocials
+        displayItemNumbering
+        logoText="Юрист Гусев С.А."
+      />
 
       <section className="hero" id="top">
         <div className="container">
@@ -79,41 +157,51 @@ function App() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             >
-              <span className="chip">Бизнес · Физические лица · Суд</span>
-              <h1 className="hero-title">Юридическая защита бизнеса и физических лиц</h1>
+              <span className="chip">Бизнес · Частные лица · Суд</span>
+              <h1 className="hero-title">Юридическая защита — первая консультация бесплатно</h1>
               <p className="hero-desc">
-                Юридические услуги и консультации: представляем интересы в суде и в досудебном
-                урегулировании — от анализа ситуации до результата.
+                Разберём ситуацию, оценим перспективы и предложим понятный план действий.
               </p>
-              <div className="hero-features">
-                {heroFeatures.map((f, i) => (
+
+              <div className="hero-advantages">
+                {heroAdvantages.map((a, i) => (
                   <motion.div
-                    key={f}
-                    className="hero-feature"
+                    key={a}
+                    className="hero-advantage"
                     initial={{ opacity: 0, x: -8 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.15 + i * 0.06, duration: 0.5 }}
                   >
-                    <span className="hero-feature-dot" />
-                    <span>{f}</span>
+                    <span className="hero-advantage-dot" />
+                    <span>{a}</span>
                   </motion.div>
                 ))}
               </div>
+
               <div className="hero-ctas">
-                <a href="#consult" className="btn primary">Получить консультацию</a>
-                <a href="#services" className="btn outline">Все услуги</a>
+                <a href="#contacts" className="btn primary">Получить консультацию</a>
+              </div>
+
+              <div className="hero-metrics">
+                {metrics.map((m) => (
+                  <div key={m.label} className="metric">
+                    <div className="metric-num">{m.num}</div>
+                    <div className="metric-label">{m.label}</div>
+                  </div>
+                ))}
               </div>
             </motion.div>
+
             <motion.div
               className="hero-portrait"
               initial={{ opacity: 0, scale: 0.98 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
             >
-              <img src={portrait} alt="Руководитель практики Gusev" />
+              <img src={portrait} alt="Гусев Сергей — руководитель практики" />
               <div className="hero-portrait-caption">
-                <strong>Руководитель практики</strong>
-                <span>Коммерческая недвижимость и арбитраж</span>
+                <strong>Гусев Сергей</strong>
+                <span>Руководитель практики</span>
               </div>
             </motion.div>
           </div>
@@ -122,19 +210,15 @@ function App() {
 
       <section id="services">
         <div className="container">
-          <motion.div className="services-header" {...fadeUp}>
-            <div>
-              <span className="chip light">Услуги</span>
-              <h2 style={{ marginTop: 16 }}>Ключевые услуги</h2>
-              <p>Выберите направление — мы оценим перспективы, объясним риски и предложим стратегию.</p>
-            </div>
-            <a href="#services" className="btn outline on-light">Все услуги</a>
+          <motion.div className="section-head" {...fadeUp}>
+            <span className="chip light">Услуги</span>
+            <h2>Поможем решить следующие проблемы</h2>
+            <p>Формулировки от задач клиента — вы сразу видите, с чем можно прийти.</p>
           </motion.div>
 
           <div className="services-grid">
-            {services.map((s, i) => (
-              <motion.a
-                href="#consult"
+            {visibleServices.map((s, i) => (
+              <motion.div
                 key={s.title}
                 className="service-card"
                 initial={{ opacity: 0, y: 20 }}
@@ -144,79 +228,138 @@ function App() {
               >
                 <h3>{s.title}</h3>
                 <p>{s.desc}</p>
-                <span className="service-card-more">Подробнее</span>
-              </motion.a>
+              </motion.div>
+            ))}
+          </div>
+
+          {services.length > 6 && (
+            <div className="services-more">
+              <button
+                type="button"
+                className="btn outline on-light"
+                onClick={() => setShowAllServices((v) => !v)}
+              >
+                {showAllServices ? 'Свернуть' : 'Показать ещё'}
+              </button>
+            </div>
+          )}
+        </div>
+      </section>
+
+      <section id="how" className="muted">
+        <div className="container">
+          <motion.div className="section-head" {...fadeUp}>
+            <span className="chip light">Как работаем</span>
+            <h2>От заявки до результата — четыре шага</h2>
+            <p>Прозрачный процесс: вы понимаете, что и когда происходит.</p>
+          </motion.div>
+
+          <div className="steps">
+            {steps.map((s, i) => (
+              <motion.div
+                key={s.num}
+                className="step"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 0.5, delay: i * 0.06 }}
+              >
+                <div className="step-num">{s.num}</div>
+                <h3>{s.title}</h3>
+                <p>{s.desc}</p>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="consult" id="consult">
+      <section id="business">
         <div className="container">
-          <div className="consult-grid">
-            <motion.form className="consult-form" onSubmit={(e) => e.preventDefault()} {...fadeUp}>
-              <span className="chip light">Первый шаг</span>
-              <h2 style={{ marginTop: 16 }}>Получите первичную консультацию</h2>
-              <p className="consult-form-desc">
-                Опишите ситуацию — оценим перспективы и предложим понятные варианты действий. Без обязательств.
-              </p>
-              <div className="form-group">
-                <label htmlFor="name">Имя</label>
-                <input id="name" type="text" placeholder="Как к вам обращаться" />
-              </div>
-              <div className="form-group">
-                <label htmlFor="phone">Телефон</label>
-                <input id="phone" type="tel" placeholder="+7" />
-              </div>
-              <div className="form-group">
-                <label htmlFor="msg">Комментарий</label>
-                <textarea id="msg" placeholder="Коротко о вашей ситуации" />
-              </div>
-              <label className="form-consent">
-                <input type="checkbox" defaultChecked />
-                <span>
-                  Я соглашаюсь с <a href="#">политикой конфиденциальности</a> и согласен на обработку персональных данных.
-                </span>
-              </label>
-              <button type="submit" className="btn primary on-light" style={{ width: '100%' }}>
-                Получить консультацию
-              </button>
-            </motion.form>
+          <motion.div className="section-head" {...fadeUp}>
+            <span className="chip light">Для бизнеса</span>
+            <h2>Юридическое сопровождение компаний</h2>
+            <p>Постоянное или проектное сопровождение — с отчётностью и фиксированной стоимостью.</p>
+          </motion.div>
 
-            <motion.div className="consult-features" {...fadeUp} transition={{ duration: 0.6, delay: 0.1 }}>
-              {consultFeatures.map((f) => (
-                <div key={f.title} className="consult-feature">
-                  <div className="consult-feature-icon">{f.icon}</div>
-                  <div>
-                    <strong>{f.title}</strong>
-                    <span>{f.desc}</span>
-                  </div>
-                </div>
-              ))}
-            </motion.div>
+          <div className="business-grid">
+            {businessFormats.map((f, i) => (
+              <motion.div
+                key={f.title}
+                className="business-card"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 0.5, delay: i * 0.06 }}
+              >
+                <h3>{f.title}</h3>
+                <p>{f.desc}</p>
+              </motion.div>
+            ))}
           </div>
+
+          <motion.div className="business-includes" {...fadeUp}>
+            <h3 className="business-includes-title">Что входит в работу</h3>
+            <div className="tags">
+              {businessIncludes.map((b) => (
+                <span key={b} className="tag">{b}</span>
+              ))}
+            </div>
+          </motion.div>
         </div>
       </section>
 
-      <section id="about">
+      <section id="trust" className="dark">
         <div className="container">
-          <div className="about-grid">
-            <motion.div {...fadeUp}>
-              <span className="chip light">О практике</span>
-              <h2 style={{ marginTop: 16 }}>Системная юридическая помощь бизнесу и собственникам</h2>
-              <p className="about-desc">
-                Практический опыт взаимодействия с регистрационными и государственными органами.
-                Прозрачные условия, отчётность и объяснение рисков — от первичной консультации до результата.
-              </p>
-              <a href="#consult" className="btn primary on-light">Подробнее о практике</a>
-            </motion.div>
-            <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.1 }}>
-              <div className="tags">
-                {aboutTags.map((t) => (
-                  <span key={t} className="tag">{t}</span>
-                ))}
-              </div>
-            </motion.div>
+          <motion.div className="section-head" {...fadeUp}>
+            <span className="chip">Экспертность</span>
+            <h2 className="on-dark">Опыт, подтверждённый практикой</h2>
+            <p className="on-dark-muted">Разделы ниже заполняются реальными данными.</p>
+          </motion.div>
+
+          <div className="trust-block">
+            <h3 className="trust-heading">Удостоверения и квалификация</h3>
+            <div className="credentials">
+              {credentials.map((c) => (
+                <div key={c.title} className="credential">
+                  <strong>{c.title}</strong>
+                  <span>{c.value}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="trust-block">
+            <h3 className="trust-heading">Кейсы</h3>
+            <div className="cases-grid">
+              {cases.map((c, i) => (
+                <div key={i} className="case-card">
+                  <div className="case-row">
+                    <div className="case-label">Тип спора</div>
+                    <div className="case-value">{c.area}</div>
+                  </div>
+                  <div className="case-row">
+                    <div className="case-label">Инстанция</div>
+                    <div className="case-value">{c.court}</div>
+                  </div>
+                  <div className="case-row">
+                    <div className="case-label">Результат</div>
+                    <div className="case-value">{c.result}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="trust-block">
+            <h3 className="trust-heading">Отзывы</h3>
+            <div className="reviews-grid">
+              {reviews.map((r, i) => (
+                <div key={i} className="review-card">
+                  <p>«{r.text}»</p>
+                  <span>— {r.name}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -226,19 +369,33 @@ function App() {
           <div className="contacts-grid">
             <motion.div className="contacts-info" {...fadeUp}>
               <span className="chip">Контакты</span>
-              <h2 style={{ marginTop: 16, color: '#fff' }}>Обсудим вашу ситуацию</h2>
+              <h2 style={{ marginTop: 16, color: '#fff' }}>Оценим перспективы вашего дела</h2>
               <p>
-                Расскажите о задаче — на первичной консультации оценим перспективы и предложим следующий шаг.
-                Итог дела не гарантируем, но объясним риски и варианты.
+                Ответственно проанализируем исходные данные и дадим оценку перспектив на основе
+                судебной практики по схожим делам — чтобы вы понимали вероятный результат.
               </p>
-              <a href="tel:+70000000000">+7 (000) 000-00-00 — уточняется</a>
-              <a href="mailto:info@example.com">info@gusev.example — уточняется</a>
-              <div style={{ marginTop: 20 }}>
-                <a href="#" className="btn outline">VK</a>
+              <div className="contacts-list">
+                {contactChannels.map((c) => (
+                  <a
+                    key={c.label}
+                    href={c.href}
+                    className="contact-link"
+                    target={c.href.startsWith('http') ? '_blank' : undefined}
+                    rel={c.href.startsWith('http') ? 'noreferrer' : undefined}
+                  >
+                    <strong>{c.label}</strong>
+                    <span>{c.sub}</span>
+                  </a>
+                ))}
               </div>
             </motion.div>
 
-            <motion.form className="contacts-form" onSubmit={(e) => e.preventDefault()} {...fadeUp} transition={{ duration: 0.6, delay: 0.1 }}>
+            <motion.form
+              className="contacts-form"
+              onSubmit={(e) => e.preventDefault()}
+              {...fadeUp}
+              transition={{ duration: 0.6, delay: 0.1 }}
+            >
               <div className="form-group">
                 <label htmlFor="c-name">Имя</label>
                 <input id="c-name" type="text" placeholder="Как к вам обращаться" />
@@ -251,54 +408,71 @@ function App() {
                 <label htmlFor="c-msg">О задаче</label>
                 <textarea id="c-msg" placeholder="Коротко опишите ситуацию" />
               </div>
-              <button type="submit" className="btn primary" style={{ width: '100%' }}>Отправить заявку</button>
+              <button type="submit" className="btn primary" style={{ width: '100%' }}>
+                Получить консультацию
+              </button>
+              <p className="form-note">
+                Нажимая кнопку, вы соглашаетесь на обработку персональных данных.
+              </p>
             </motion.form>
           </div>
         </div>
       </section>
 
-      <footer className="footer" id="blog">
+      <footer className="footer">
         <div className="container">
           <div className="footer-grid">
             <div>
-              <div className="footer-logo">Gusev</div>
+              <div className="footer-logo">Юрист Гусев С.А.</div>
               <p className="footer-brief">
-                Юридическая практика: коммерческая недвижимость, арбитражные споры и сопровождение бизнеса.
+                Юридическая помощь бизнесу и частным лицам. Первая консультация — бесплатно.
               </p>
             </div>
             <div className="footer-col">
               <h4>Навигация</h4>
               <ul>
-                <li><a href="#about">О практике</a></li>
+                <li><a href="#services">Услуги</a></li>
+                <li><a href="#how">Как работаем</a></li>
+                <li><a href="#business">Для бизнеса</a></li>
+                <li><a href="#trust">Экспертность</a></li>
                 <li><a href="#contacts">Контакты</a></li>
-                <li><a href="#blog">Блог</a></li>
               </ul>
             </div>
             <div className="footer-col">
-              <h4>Услуги</h4>
+              <h4>Контакты</h4>
               <ul>
-                <li><a href="#services">Коммерческая недвижимость</a></li>
-                <li><a href="#services">Арбитражные споры</a></li>
-                <li><a href="#services">Сопровождение сделок</a></li>
-                <li><a href="#services">Договорное право</a></li>
-                <li><a href="#services">Все направления</a></li>
-              </ul>
-            </div>
-            <div className="footer-col">
-              <h4>Документы</h4>
-              <ul>
-                <li><a href="#">Политика конфиденциальности</a></li>
-                <li><a href="#">Согласие на обработку ПДн</a></li>
-                <li><a href="#">Условия использования</a></li>
+                <li><a href="tel:+79257910401">8 925 791-04-01</a></li>
+                <li><a href="https://wa.me/79257910401" target="_blank" rel="noreferrer">WhatsApp</a></li>
+                <li><a href="https://t.me/+79257910401" target="_blank" rel="noreferrer">Telegram</a></li>
+                <li><a href="mailto:gserezha@bk.ru">gserezha@bk.ru</a></li>
               </ul>
             </div>
           </div>
           <div className="footer-bottom">
-            <span>© {new Date().getFullYear()} Gusev. Юридическая практика.</span>
+            <span>© {new Date().getFullYear()} Юрист Гусев С.А.</span>
             <span>Информация на сайте не является публичной офертой.</span>
           </div>
         </div>
       </footer>
+
+      <nav className="mobile-tabbar" aria-label="Быстрая навигация">
+        <a href="#top">
+          <span className="tab-icon" aria-hidden="true">◉</span>
+          <span>Главная</span>
+        </a>
+        <a href="#services">
+          <span className="tab-icon" aria-hidden="true">◈</span>
+          <span>Услуги</span>
+        </a>
+        <a href="#business">
+          <span className="tab-icon" aria-hidden="true">◇</span>
+          <span>О практике</span>
+        </a>
+        <a href="#contacts">
+          <span className="tab-icon" aria-hidden="true">✉</span>
+          <span>Контакты</span>
+        </a>
+      </nav>
     </>
   )
 }
