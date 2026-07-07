@@ -69,11 +69,7 @@ function App() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             >
-              <span className="chip">Бизнес · Частные лица · Суд</span>
-              <h1 className="hero-title">Юридическая защита — первая консультация бесплатно</h1>
-              <p className="hero-desc">
-                Разберём ситуацию, оценим перспективы и предложим понятный план действий.
-              </p>
+              <h1 className="hero-title">Юридическая защита</h1>
 
               <div className="hero-advantages">
                 {heroAdvantages.map((a, i) => (
