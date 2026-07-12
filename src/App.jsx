@@ -31,6 +31,7 @@ const steps = [
 
 const contactChannels = [
   { label: '8 925 791-04-01', sub: 'Позвонить', href: 'tel:+79257910401' },
+  { label: '8 985 262-82-39', sub: 'Позвонить', href: 'tel:+79852628239' },
   { label: 'WhatsApp', sub: 'Написать в мессенджер', href: 'https://wa.me/79257910401' },
   { label: 'Telegram', sub: 'Быстрый чат', href: 'https://t.me/+79257910401' },
   { label: 'gserezha@bk.ru', sub: 'Электронная почта', href: 'mailto:gserezha@bk.ru' },
@@ -237,6 +238,7 @@ function App() {
               <h4>Контакты</h4>
               <ul>
                 <li><a href="tel:+79257910401">8 925 791-04-01</a></li>
+                <li><a href="tel:+79852628239">8 985 262-82-39</a></li>
                 <li><a href="https://wa.me/79257910401" target="_blank" rel="noreferrer">WhatsApp</a></li>
                 <li><a href="https://t.me/+79257910401" target="_blank" rel="noreferrer">Telegram</a></li>
                 <li><a href="mailto:gserezha@bk.ru">gserezha@bk.ru</a></li>
